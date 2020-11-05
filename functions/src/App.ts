@@ -1,20 +1,21 @@
-
+import { userController, authController } from './controller';
 import express = require('express');
+import bodyParser = require('body-parser');
+const cors = require('cors');
+
 const app = express();
-const router = express.Router();
 
-router.use(function (req, res, next) {
-    next()
-  })
+app.use(cors({ origin: true }));
 
-  
-router.get('/abc', function(req, res,) {
-    res.send(`test request api ${req.rawHeaders}`);
-});
+
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.post('/', (req, res) => res.send(`todo somthing logic here`))
 
-app.use('/user', router)
+app.use('/auth', authController)
+
+app.use('/users', userController)
 
 
 export { app }  
